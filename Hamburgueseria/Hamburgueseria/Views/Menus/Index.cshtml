@@ -1,0 +1,101 @@
+﻿@model Hamburgueseria.Models.ViewModel.EleccionMenuVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+<h1>Principales:</h1>
+<form asp-controller="Menus" asp-action="ConfirmarMenu">
+
+
+    <div class="row">
+        @foreach (Principal principales in Model.Principales)
+        {
+
+            <div class="card col-lg-4 col-md-6 col-sm-12" style="width: 10rem">
+
+                <img class="card-img-top" src="@principales.Imagen" alt="Card image cap">
+                <h5 class="card-title">@principales.Nombre</h5>
+                <p class="card-text" @principales.Descripcion></p>
+                <p class="card-text" @principales.Ingrediente></p>
+
+                <div class="card-body">
+                    <input asp-for="Menu.PrincipalId" type="radio" value="@principales.Id">
+                    <label class="form-check-label" for="exampleRadios1">
+                        @principales.Nombre
+                    </label>
+                </div>
+
+            </div>
+
+        }
+    </div>
+
+    <h1>Entrantes:</h1>
+    <div class="row">
+        @foreach (Entrante entrantes in Model.Entrantes)
+        {
+
+            <div class="card col-lg-4 col-md-6 col-sm-12" style="width: 10rem">
+                <img class="card-img-top" src="@entrantes.Imagen" alt="Card image cap">
+                <h5 class="card-title">@entrantes.Nombre</h5>
+                <p class="card-text" @entrantes.Descripcion></p>
+                <p class="card-text" @entrantes.Ingrediente></p>
+
+                <div class="card-body">
+                    <input asp-for="Menu.EntranteId" type="radio" value="@entrantes.Id">
+                    <label class="form-check-label" for="exampleRadios1">
+                        @entrantes.Nombre
+                    </label>
+                </div>
+            </div>
+
+
+
+        }
+    </div>
+
+    <h1>Postres:</h1>
+    <div class="row">
+        @foreach (Postre postres in Model.Postres)
+        {
+
+            <div class="card col-lg-4 col-md-6 col-sm-12" style="width: 10rem">
+                <img class="card-img-top" src="@postres.Imagen" alt="Card image cap">
+                <h5 class="card-title">@postres.Nombre</h5>
+                <p class="card-text" @postres.Descripcion></p>
+                <p class="card-text" @postres.Ingrediente></p>
+
+                <div class="card-body">
+                    <input asp-for="Menu.PostreId" type="radio" value="@postres.Id">
+                    <label class="form-check-label" for="exampleRadios1">
+                        @postres.Nombre
+                    </label>
+                </div>
+
+            </div>
+
+        }
+    </div>
+
+    <input type="submit" value="Resumen Menú">
+
+
+    @*<td>
+            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+        </td>*@
+
+</form>
+
+
+
+

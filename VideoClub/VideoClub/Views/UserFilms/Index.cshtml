@@ -1,0 +1,106 @@
+﻿@model List<VideoClub.Models.UserFilm>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<form asp-controller="UserFilms" asp-action="Index">
+    <select name="pendiente">
+        <option value="">Todos</option>
+        <option value="si">Pendientes</option>
+        <option value="no">Finalizados</option>
+    </select>
+    <input type="submit" value="Buscar" />
+</form>
+
+
+
+@if (Model.Count == 0)
+{
+    <h1>No tienes ningún alquiler</h1>
+}
+else
+{
+    @*<p>
+            <a asp-action="Create">Create New</a>
+        </p>*@
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Fecha alquiler
+                </th>
+                <th>
+                    Fecha Devolución
+                </th>
+                <th>
+                    Película
+                </th>
+                <th>
+                    Imagen
+                </th>
+                <th>
+                    Devolver Película
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UserFilm alquiler in Model)
+            {
+
+                if (@alquiler.Daterental.AddDays(2) < DateTime.Now && @alquiler.Returndate == null)
+                {
+
+                    <tr class="table-danger">
+                        <td>
+                            @alquiler.Daterental
+                        </td>
+                        <td>
+                            @alquiler.Returndate
+                        </td>
+                        <td>
+                            @alquiler.Film.Title
+                        </td>
+                        <td>
+                            <img src="@alquiler.Film.Image" />
+                        </td>
+                        <td>
+                            <a asp-controller="UserFilms" asp-action="DevolverPelicula" asp-route-id="@alquiler.Id">Devolver Pelicula</a>
+                        </td>
+                    </tr>
+
+                }
+
+                else
+                {
+
+                    <tr>
+                        <td>
+                            @alquiler.Daterental
+                        </td>
+                        <td>
+                            @alquiler.Returndate
+                        </td>
+                        <td>
+                            @alquiler.Film.Title
+                        </td>
+                        <td>
+                            <img src="@alquiler.Film.Image" />
+                        </td>
+
+                    </tr>
+
+                }
+
+                @*<td>
+                        <a asp-action="Edit" asp-route-id="@alquiler.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@alquiler.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@alquiler.Id">Delete</a>
+                    </td>*@
+
+            }
+        </tbody>
+    </table>
+
+}

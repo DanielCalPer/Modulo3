@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    string nombre = "Dani";
+    string saludo = "hola";
+
+    List<string> compra = new List<string>()
+    {
+        "peras", "patatas", "platanos", "manzanas"
+    };
+
+
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">@saludo @nombre</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <ul>
+        @{
+            foreach (string item in compra)
+            {
+                <li>@item</li>
+            }
+        }
+        
+    </ul>
+</div>

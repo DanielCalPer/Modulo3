@@ -1,0 +1,69 @@
+﻿@model List<Producto>
+@{
+    ViewData["Title"] = "Index";
+
+    List<string> tipos = ViewData["tipos"] as List<string>;
+    // as es un casteo que  los transforma a lo que le digamos.
+    //List<Producto> productos = (List<Producto>)ViewData["productos"];  otro tipo de casteo. Igual que el anterior.
+
+    //string nombre = ViewBag.Nombre as string;
+
+}
+
+<form asp-controller="Productos" asp-action="Index">
+    <input type="text" placeholder="Introduce el término de búsqueda" name="nombre"/>
+    <select  id="selectTipo" name="tipo">
+        <option value="Todos">Todos </option>
+
+        @foreach (string item in tipos)
+        {
+            <option class="option" value="@item" >@item</option>
+        }
+
+    </select>
+    <input type="submit" value="Buscar" />
+
+</form>
+
+
+
+@if (Model.Count == 0)
+{
+    <h3 style="color:red">No hay resultados</h3>
+}
+
+<div class="container-fluid">
+    <!--No hace falta poner container ya lo tiene en el Layout-->
+    <div class="row">
+
+        
+        @{
+            foreach (Producto item in Model)
+            {
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="@item.Imagen" class="card-img-top" alt="@item.Nombre">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                @item.Nombre  <button id="swapHeart" class="swapHeart btn btn-default swap">
+                                    <span class="fa fa-heart" aria-hidden="true"></span>
+                                </button>
+                            </h5>
+
+                            <p class="card-text">Descripcion: @item.Descripcion</p>
+                            <p class="card-text">Id: @item.Id</p>
+                            <p class="card-text">Tipo: @item.Tipo</p>
+                            <p class="card-text">Precio: @item.Precio</p>
+                            <p class="card-text">Fecha de Caducidad: @item.FechaCaducidad</p>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>
+
+
+

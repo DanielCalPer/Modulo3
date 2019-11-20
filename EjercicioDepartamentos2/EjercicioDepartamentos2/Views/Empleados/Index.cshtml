@@ -1,0 +1,69 @@
+﻿@model List<EjercicioDepartamentos2.Models.Empleado>
+
+@{
+    ViewData["Title"] = "Index";
+    
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="row">
+    <form asp-controller="Empleados" asp-action="Index">
+        <input type="text" placeholder="Nombre empleado" name="nombre" />
+        <select id="selectTipo" name="departamento">
+            <option value="">Todos </option>
+
+            @foreach (string item in ViewData["departamentos"] as List<string>)
+            {
+                <option class="option" value="@item">@item</option>
+            }
+
+        </select>
+        <input type="submit" value="Buscar" />
+
+    </form>
+
+</div>
+
+
+<div class="row">
+    @foreach (Empleado empleado in Model)
+    {
+
+        <div class="card col-lg-4 col-md-6 col-sm-12" style="width: 18rem;">
+            <a class="btn" data-toggle="collapse" href="#collapseExample-@empleado.Id" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <img src="@empleado.Imagen" class=" imagenCard card-img-top rounded-circle imageCollapse" alt="...">
+            </a>
+
+            <div class="card-body">
+               
+                <div class="collapse listaCollapse" id="collapseExample-@empleado.Id">
+                    <!--tb se puede usar la clase FADE-->
+                    <h5 class="card-title">@empleado.Nombre</h5>
+                    <p class="card-text">@empleado.Apellido</p>
+                    <p class="card-text">@empleado.Telefono</p>
+                    <p class="card-text">@empleado.Email</p>
+                    <p class="card-text">@empleado.Departamento.Empresa.Nombre</p>
+                    <p class="card-text">@empleado.Departamento.Nombre</p>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+                <a asp-action="Edit" asp-route-id="@empleado.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@empleado.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@empleado.Id">Delete</a>
+            </div>
+
+        </div>
+
+    }
+
+</div>
+
+
+

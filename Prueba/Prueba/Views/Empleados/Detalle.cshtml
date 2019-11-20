@@ -1,0 +1,12 @@
+﻿@model Empleado
+
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+<h1>@Model.Nombre</h1>
+<h3>Id: @Model.Id</h3>
+<h3>Apellido: @Model.Apellido</h3>
+<h3>Fecha de Nacimiento: @Model.FechaNacimiento</h3>
+<img src="@Url.Content(@Model.Imagen)"/>
+

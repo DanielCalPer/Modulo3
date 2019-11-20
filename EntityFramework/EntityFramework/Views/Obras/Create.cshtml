@@ -1,0 +1,51 @@
+﻿@model EntityFramework.Models.ViewModels.CrearObraVM
+    <!--Lo cambiamos ya que ahora trabajamos sobre el viewmodel-->
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Obra</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Obra.Titulo" class="control-label"></label>
+                <input asp-for="Obra.Titulo" class="form-control" />
+                <span asp-validation-for="Obra.Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Obra.AnoPublicacion" class="control-label"></label>
+                <input asp-for="Obra.AnoPublicacion" class="form-control" />
+                <span asp-validation-for="Obra.AnoPublicacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Autor</label>
+                <select asp-for="Obra.AutorId" class="form-control">
+                    @foreach (Autor autor in Model.Autores)
+                    {
+                        <option value="@autor.Id"> @autor.Nombre @autor.Apellido</option>
+                    }
+
+                </select>
+               
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

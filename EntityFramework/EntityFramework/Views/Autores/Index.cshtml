@@ -1,0 +1,60 @@
+﻿@model IEnumerable<EntityFramework.Models.Autor> 
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Apellido
+            </th>
+            <th>
+                FechaNacimiento
+            </th>
+            <th>
+                Obras
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (Autor autor in Model) {
+        <tr>
+            <td>
+                @autor.Nombre
+            </td>
+            <td>
+                @autor.Apellido
+            </td>
+            <td>
+                @autor.FechaNacimiento
+            </td>
+            <td>
+                <ul>
+                    @foreach (Obra obra in autor.Obras)
+                    {
+                    <li>@obra.Titulo</li>
+                    }
+                </ul>
+                
+            </td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@autor.Id">Edit</a> |
+                <a asp-controller="Autores" asp-action="Details" asp-route-id="@autor.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@autor.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

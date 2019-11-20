@@ -1,0 +1,54 @@
+﻿@model List<EjercicioDepartamentos2.Models.Departamento>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Abreviatura
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @*<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th class="th-sm">
+                    Nombre
+                </th>
+                <th class="th-sm">
+                    Abreviatura
+                </th>
+            </tr>
+        </thead>
+        <tbody>*@
+            @foreach (Departamento departamento in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => departamento.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => departamento.Abreviatura)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@departamento.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@departamento.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@departamento.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

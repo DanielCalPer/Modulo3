@@ -1,0 +1,73 @@
+﻿@model Hamburgueseria.Models.Menu
+
+@{
+    ViewData["Title"] = "ConfirmarMenu";
+}
+
+<h1>ConfirmarMenu</h1>
+
+<form asp-controller="Menus" asp-action="EleccionMenu">
+    <div>
+        <h4>Menu</h4>
+        <hr />
+        <dl class="row">
+            @if (Model.Principal != null)
+            {
+
+                <dt class="col-sm-2">
+                <input type="hidden" value="@Model.Principal.Id" asp-for="PrincipalId" />
+                    Principal:
+                </dt>
+                <dd class="col-sm-10">
+                    @Model.Principal.Nombre;
+                </dd>
+
+            }
+            @if (Model.Entrante != null)
+            {
+
+                <dt class="col-sm-2">
+                <input type="hidden" value="@Model.Entrante.Id" asp-for="EntranteId" />
+                    Entrante:
+                </dt>
+                <dd class="col-sm-10">
+                    @Model.Entrante.Nombre;
+                </dd>
+            }
+            @if (Model.Postre != null)
+            {
+
+                <dt class="col-sm-2">
+                <input type="hidden" value="@Model.Postre.Id" asp-for="PostreId" />
+                    Postre:
+                </dt>
+                <dd class="col-sm-10">
+                    @Model.Postre.Nombre;
+                </dd>
+            }
+
+            <dt class="col-sm-2">
+                Fecha
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Fecha;
+            </dd>
+            <dt class="col-sm-2">
+                Precio Total
+            </dt>
+            <dd class="col-sm-10">
+                @Model.PrecioTotal;
+            </dd>
+        </dl>
+    </div>
+
+    <input type="hidden" value="@Model.PrecioTotal" asp-for="PrecioTotal" />
+    <input type="hidden" value="@Model.Fecha" asp-for="Fecha" />
+    <input type="submit" value="Confirmar Pedido"/>
+
+</form>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

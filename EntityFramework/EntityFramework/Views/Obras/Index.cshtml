@@ -1,0 +1,66 @@
+﻿@model List<EntityFramework.Models.Obra>
+ <!--IEnumerable = List-->
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Titulo
+            </th>
+            <th>
+                Año de Publicacion
+            </th>
+            <th>
+                Autor
+            </th>
+            <th>
+                Categoria
+            </th>
+            <th>
+                Imagen
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Obra obra in Model)
+        {
+            <tr>
+                <td>
+                    @obra.Titulo
+                </td>
+                <td>
+                    @obra.AnoPublicacion
+                </td>
+                <td>
+                    @obra.Autor.Nombre @obra.Autor.Apellido
+                </td>
+                <td>
+                    <img class="imagenObra" src="@obra.Imagen" />
+                </td>
+                <td>
+                    @foreach (ObraCategoria obracategoria in obra.ObraCategorias)
+                    {
+                    @obracategoria.Categoria.Nombre;
+                    }
+
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@obra.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@obra.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@obra.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

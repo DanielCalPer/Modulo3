@@ -1,0 +1,38 @@
+﻿@model VideoClub.Models.Film
+
+@{
+    ViewData["Title"] = "Alquilar";
+}
+
+
+
+<div>
+    <h4>@Model.Title</h4>
+    <hr />
+    <dl class="row">
+        
+        <dt class = "col-sm-2">
+            Sinopsis
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Sinopsis
+        </dd>
+        <dt class = "col-sm-2">
+            Genre
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Genre
+        </dd>
+        <dt class = "col-sm-2">
+            Image
+        </dt>
+        <dd class = "col-sm-10">
+            <img src="@Model.Image" alt="@Model.Title" />
+        </dd>
+       
+    </dl>
+</div>
+<div>
+    <a asp-controller="UserFilms" asp-action="ConfirmarAlquiler" asp-route-id="@Model.Id">ConfirmarAlquiler</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,104 @@
+﻿@model IEnumerable<VideoClub.Models.User>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+        <a asp-action="Create">Create New</a>
+    </p>
+<div class="row">
+
+
+    <div class="dropdown">
+
+        <form asp-controller="Users" asp-action="Index">
+
+            <select id="selectTipo" name="alquiler">
+
+                <option class="option" value="Alquileres vigentes">Alquileres vigentes</option>
+                <option class="option" value="Alquileres pasados">Alquileres pasados</option>
+
+            </select>
+            <input type="submit" value="Buscar" />
+
+        </form>
+
+    </div>
+
+
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Lastname
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                RentedFilms
+            </th>
+            <th>
+                Daterented
+            </th>
+            <th>
+                ReturnDate
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (User user in Model)
+        {
+            <tr>
+                <td>
+                    @user.Name
+
+                </td>
+                <td>
+                    @user.Lastname
+
+                </td>
+                <td>
+                    @user.Email
+
+                </td>
+                <td>
+                    @foreach (var userfilm in ViewData["alquileres"] as List<UserFilm>)
+                    {
+                        <p>@userfilm.Film.Title </p>
+                    }
+
+                </td>
+                <td>
+                    @foreach (var userfilm in ViewData["alquileres"] as List<UserFilm>)
+                    {
+                        <p>@userfilm.Daterental </p>
+                    }
+
+                </td>
+                <td>
+                    @foreach (var userfilm in ViewData["alquileres"] as List<UserFilm>)
+                    {
+                        <p>@userfilm.Returndate </p>
+                    }
+
+                </td>
+                @*<td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
