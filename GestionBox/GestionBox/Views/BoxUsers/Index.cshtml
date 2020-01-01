@@ -1,0 +1,66 @@
+﻿@model IEnumerable<GestionBox.Models.BoxUser>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Tarifas Usuarios</h1>
+
+<div class="buscador row">
+    <form asp-controller="BoxUsers" asp-action="Index">
+
+
+        <select class="selectTarifas" name="role">
+            <option value="Terricola">Terricola </option>
+            <option value="Namekiano">Namekiano </option>
+            <option value="Sayan">Sayan </option>
+
+        </select>
+
+        <input type="text" placeholder="Introduce el nombre del usuario" name="name" />
+
+        <input type="submit" value="Buscar" />
+
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Tarifa
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.FirstName
+                </td>
+                <td>
+                    @item.LastName
+                </td>
+                <td>
+                    @item.Tarifa
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> 
+                    @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

@@ -1,0 +1,72 @@
+﻿@model List<GestionBox.Models.Horario>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<p>
+    <a asp-action="Create">Crear Nuevo Horario</a>
+</p>
+
+<div class="buscador">
+    <form asp-controller="Horarios" asp-action="Index">
+        <select class="selectHorario" name="dia">
+            <option value="">Dia </option>
+
+            @{List<int> Mes = Model.Select(x => x.Dia.Day).Distinct().ToList(); }
+
+            @foreach (int dia in Mes)
+            {
+                <option class="option" value="@dia">@dia</option>
+            }
+
+        </select>
+        <select class="selectHorario" name="mes">
+            <option value="0">Mes </option>
+
+            @{List<int> Meses = Model.Select(x => x.Dia.Month).Distinct().ToList(); }
+
+            @foreach (int mes in Meses)
+            {
+                <option class="option" value="@mes">@mes</option>
+            }
+
+        </select>
+        <input type="submit" value="Filtrar" />
+    </form>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Dia:
+            </th>
+            <th>
+                Hora:
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Dia.Day
+                </td>
+                <td>
+                    @item.Hora.TimeOfDay
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

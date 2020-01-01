@@ -12,7 +12,7 @@ namespace Hamburgueseria.Controllers
     {
         private readonly HamburgueseriaContext _context;
 
-        public MenusController(HamburgueseriaContext context)
+        public MenusController(HamburgueseriaContext context)// constructor une MenusController con HamburgeseriaContxt, osea el objeto Menu con la BBDD. 
         {
             _context = context;
         }
@@ -20,7 +20,7 @@ namespace Hamburgueseria.Controllers
         // GET: Menus
         public async Task<IActionResult> Index()
         {
-            EleccionMenuVM emvm = new EleccionMenuVM
+            EleccionMenuVM emvm = new EleccionMenuVM // instanciamos el objeto del ViewModel, y lo llenamos son los Objetos sacados de la BBDD.
             {
                 Entrantes = await _context.Entrantes.ToListAsync(),    
                 Principales = await _context.Principales.ToListAsync(),
@@ -157,7 +157,7 @@ namespace Hamburgueseria.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ConfirmarMenu(EleccionMenuVM emvm)
+        public async Task<IActionResult> ConfirmarMenu(EleccionMenuVM emvm)// no seria mas correcto decir que lo que recibe son los 3 Ids? y el menu?, porque no le da error?
         {
             Entrante entrante = await _context.Entrantes.FindAsync(emvm.Menu.EntranteId); // buscamos objetos en funcion ID recibido
             Principal principal = await _context.Principales.FindAsync(emvm.Menu.EntranteId);

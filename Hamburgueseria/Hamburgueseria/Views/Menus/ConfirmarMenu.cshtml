@@ -56,13 +56,13 @@
                 Precio Total
             </dt>
             <dd class="col-sm-10">
-                @Model.PrecioTotal;
+                @Model.PrecioTotal; 
             </dd>
         </dl>
     </div>
 
     <input type="hidden" value="@Model.PrecioTotal" asp-for="PrecioTotal" />
-    <input type="hidden" value="@Model.Fecha" asp-for="Fecha" />
+    <input type="hidden" value="@Model" asp-for="Id" />
     <input type="submit" value="Confirmar Pedido"/>
 
 </form>

@@ -1,0 +1,26 @@
+﻿@model GestionBox.Models.BoxUser
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1> Nueva Tarifa Usuario</h1>
+
+<div class="buscador row">
+    <form asp-controller="BoxUsers" asp-action="Edit">
+
+        <select class="selectTarifas" name="role">
+            <option value="Terricola">Terricola </option>
+            <option value="Namekiano">Namekiano </option>
+            <option value="Sayan">Sayan </option>
+
+
+        </select>
+        <input type="submit" value="Seleccionar" />
+
+    </form>
+    
+    
+</div>
+<div>
+    <a asp-action="Index">Volver a Tarifas</a>
+</div>

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using EntityFramework.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using GestionBox.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,19 +15,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
-namespace EntityFramework.Areas.Identity.Pages.Account
+namespace GestionBox.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<AppUser> _signInManager;
-        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<BoxUser> _signInManager;
+        private readonly UserManager<BoxUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager,
+            UserManager<BoxUser> userManager,
+            SignInManager<BoxUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -61,13 +61,12 @@ namespace EntityFramework.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-
             [Display(Name = "First Name")]
-            public string FirstName { get; set; }
+            public string Firstname { get; set; }
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
-            [Display(Name = "Adress ")]
-            public string Adress { get; set; }
+            [Display(Name = "Tarifa")]
+            public string Tarifa { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -82,23 +81,25 @@ namespace EntityFramework.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new AppUser 
-                { 
-                    FirstName = Input.FirstName,
-                    LastName = Input.LastName,
-                    Adress = Input.Adress,
+                var user = new BoxUser 
+                {
                     UserName = Input.Email,
-                    Email = Input.Email
+                    Email = Input.Email, 
+                    FirstName = Input.Firstname, 
+                    LastName = Input. LastName,
+                    Tarifa = Input.Tarifa
+
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, user.Tarifa);// Le damos un Rol == Tarifa que elige, y así a la hora de filtrar con Authorized es más fácil.  
+
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,

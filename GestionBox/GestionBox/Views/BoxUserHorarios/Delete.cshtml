@@ -1,0 +1,44 @@
+﻿@model GestionBox.Models.BoxUserHorario
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Borrar</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    
+    <dl class="row">
+        <dt class="col-sm-2">
+            User Name:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.BoxUser.FirstName;
+        </dd>
+        <dt class="col-sm-2">
+            Horario:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Horario.Hora;
+        </dd>
+        <dt class="col-sm-2">
+            Clase:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Horario.Clase.Nombre;
+        </dd>
+        <dt class="col-sm-2">
+            Imagen:
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.Horario.Clase.Imagen" alt="@Model.Horario.Clase.Imagen" />;
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Confirmar Baja" id="BotonConfirmarBaja"class="btn btn-danger" /> |
+        <a asp-action="Index">Volver a la Lista Registro</a>
+    </form>
+</div>

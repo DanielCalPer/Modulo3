@@ -1,0 +1,135 @@
+﻿@model GestionBox.Models.ViewModel.HorarioClaseVM
+
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<BoxUser> _userManager
+@inject SignInManager<BoxUser> _signInManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Clases</h1>
+
+@{BoxUser user = await _userManager.GetUserAsync(User);}
+
+<h1>Tarifa: @user.Tarifa </h1>
+
+@if (_signInManager.IsSignedIn(User))
+{
+
+
+    @if (await _userManager.IsInRoleAsync(user, "Administrador")) // si es admin puede verlo.
+    {
+        <p>
+            <a asp-action="Create">Crear Nueva Clase</a>
+        </p>
+    }
+
+}
+
+<div class="buscador row">
+    <form asp-controller="Clases" asp-action="Index">
+        <input type="text" placeholder="Introduce el nombre de la clase" name="name" />
+
+        <select class="selectMisclases" name="tipo">
+            <option value="">Tipo </option>
+
+            @{List<string> tipoClase = Model.Clases.Select(x => x.Tipo).Distinct().ToList(); }
+
+
+            @foreach (string tipo in tipoClase)
+            {
+                <option class="option" value="@tipo">@tipo</option>
+            }
+
+        </select>
+
+        <select class="selectMisclases" name="dia">
+            <option value="">Dia </option>
+
+            @{List<DateTime> diasClase = Model.Horarios.Select(x => x.Dia).Distinct().ToList(); }
+
+            @foreach (DateTime dia in diasClase)
+            {
+                <option class="option" value="@dia">@dia.Day</option>
+            }
+
+        </select>
+        <input type="submit" value="Buscar" />
+
+    </form>
+</div>
+
+<div class="row ClasesView">
+    @foreach (Clase clase in Model.Clases)
+    {
+        <div class="card col-lg-4 col-md-6 col-sm-12">
+            <div>
+                <img class="card-img-top" src="@clase.Imagen" alt="@clase.Nombre">
+            </div>
+
+            <div class="card-body">
+                <h5 class="card-title">@clase.Nombre</h5>
+                <p class="card-text">@clase.Descripcion</p>
+                <p class="card-text">@clase.Tipo</p>
+                <p>
+                    <a class="btn btn-primary" data-toggle="collapse" href="#CollapseExample-@clase.Id" role="button" aria-expanded="false" aria-controls="CollapseExample">
+                        Desplegar Horarios
+                    </a>
+
+                </p>
+                <div>
+                    @if (_signInManager.IsSignedIn(User))
+                    {
+
+                        @if (await _userManager.IsInRoleAsync(user, "Administrador")) // si es admin puede verlo.
+                        {
+
+                            <div>
+                                <a asp-action="Edit" asp-route-id="@clase.Id">Editar</a> |
+                                <a asp-action="Details" asp-route-id="@clase.Id">Detalles</a> |
+                                <a asp-action="Delete" asp-route-id="@clase.Id">Borrar</a>
+
+                            </div>
+
+                        }
+
+                    }
+
+                </div>
+                <div class="row">
+                    <div class="collapse" id="CollapseExample-@clase.Id">
+                        @foreach (Horario horario in clase.Horarios)
+                        {
+                            <div class="row">
+                                <p>@horario.Hora &nbsp;</p>
+
+                                <form asp-route-id="@horario.Id" asp-controller="Horarios" asp-action="Reservar">
+
+                                    <!--asp-route-id le pasa por parametros el Id al metodo Reservar-->
+                                    <input class="btn btn-primary" type="submit" value="Reservar" />
+
+                                </form>
+                            </div>
+
+                        }
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    }
+
+</div>
+
+
+
+
+
+
+
+
+

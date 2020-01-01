@@ -1,0 +1,57 @@
+﻿@model List<GestionBox.Models.BoxUserHorario>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<BoxUser> _userManager
+@inject SignInManager<BoxUser> _signInManager
+
+
+@{BoxUser user = await _userManager.GetUserAsync(User);}
+
+<h1>Mis Clases </h1>
+<h1>Tarifa: @user.Tarifa </h1>
+
+<div>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    Class Name:
+                </th>
+                <th>
+                    Class Image:
+                </th>
+                <th>
+                    Day/Hour:
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+
+                <td>
+                    @item.Horario.Clase.Nombre
+                </td>
+                <td>
+                    <img class="ImagenMisclases" src="@item.Horario.Clase.Imagen" alt="@item.Horario.Clase.Nombre" />
+                </td>
+                <td>
+                    @item.Horario.Hora
+                </td>
+                <td>
+
+                    <a asp-action="Delete" asp-route-id="@item.Id">Darse de Baja</a>
+
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+
+

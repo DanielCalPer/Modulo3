@@ -1,0 +1,103 @@
+﻿@model List<GestionBox.Models.BoxUserHorario>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Registro Clases</h1>
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+<div class="buscador row">
+    <form asp-controller="BoxUserHorarios" asp-action="Index">
+
+        <select class="selectHorario" name="userName">
+            <option value="">Usuario </option>
+
+            @{List<string> nombreUsuario = Model.Select(x => x.BoxUser.FirstName).Distinct().ToList(); }
+
+
+            @foreach (string userName in nombreUsuario)
+            {
+                <option class="option" value="@userName">@userName</option>
+            }
+
+        </select>
+        <select class="selectHorario" name="name">
+            <option value="">Clase </option>
+
+            @{List<string> nombreClases = Model.Select(x => x.Horario.Clase.Nombre).Distinct().ToList(); }
+
+
+            @foreach (string name in nombreClases)
+            {
+                <option class="option" value="@name">@name</option>
+            }
+
+        </select>
+        <select class="selectHorario" name="hora">
+            <option value="">Dia/hora </option>
+
+            @{List<DateTime> horaClase = Model.Select(x => x.Horario.Dia).Distinct().OrderBy(x => x.Date).ToList(); }
+
+
+            @foreach (DateTime hora in horaClase)
+            {
+                <option class="option" value="@hora">@hora</option>
+            }
+
+        </select>
+        <input type="submit" value="Filtrar" />
+
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+           
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            
+            <th>
+                Class Name
+            </th>
+            
+            <th>
+                Day/Hour
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            <td>
+                @item.BoxUser.FirstName
+            </td>
+            <td>
+                @item.BoxUser.LastName
+            </td>
+            
+            <td>
+                @item.Horario.Clase.Nombre
+            </td>
+            
+            <td>
+                @item.Horario.Hora
+            </td>
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
+                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
